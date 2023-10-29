@@ -131,13 +131,13 @@ paths:
           description: "Correo electrónico del usuario"
           schema:
             type: string
-          - name: password
+        - name: password
           in: query
           required: true
           description: "Nueva contraseña del usuario"
           schema:
             type: string
-          - name: nombre
+        - name: nombre
           in: query
           required: true
           description: "Nuevo nombre y apellidos del usuario"
