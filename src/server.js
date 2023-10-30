@@ -25,7 +25,6 @@ const port = process.env.PORT || 3001;
 const host = '10.236.40.117';
 
 /**
- * adsjhsafdhjosafdhoifdsahjfdsa
  * Inicia el servidor Express.
  * @function
  * @name listen
