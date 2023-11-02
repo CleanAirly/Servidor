@@ -30,7 +30,7 @@ router.post('/value', sensorController.uploadValue)
  * @memberof /sensor
  * @param {function} sensorController.getValues - Controlador para la solicitud GET.
  */
-router.route('/').get(sensorController.getValues)
+router.route('/').post(sensorController.getValues)
 
 /**
  * Ruta para eliminar un valor de sensor.
