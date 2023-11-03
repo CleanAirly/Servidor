@@ -10,7 +10,7 @@
 ## Descipción
 Repositorio para el Software del Servidor API REST y Base de Datos desarrollado por CleanAirly.
 ## Instalación
-- Descargar el .zip del repositorio y extraer los archivos.
+- Clonar o descargar el .zip del repositorio y extraer los archivos.
 - Descargar e instalar XAMP (si no se tiene instalado).
 - Descargar e instalar Node.js (si no se tiene instalado).
 ## Instrucciones de uso
