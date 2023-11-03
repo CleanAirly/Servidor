@@ -22,7 +22,7 @@ app.use(bodyParser.json())
 app.use('/api', routes)
 
 const port = process.env.PORT || 3001;
-const host = '10.236.40.117';
+const host = '192.168.1.36';
 
 /**
  * Inicia el servidor Express.

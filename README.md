@@ -1,5 +1,4 @@
 # SERVIDOR - CleanAirly
-Repositorio para el Software del Servidor API REST y Base de Datos desarrollado por CleanAirly.
 ## Índice
 - Descripción
 - Instalación
@@ -9,7 +8,9 @@ Repositorio para el Software del Servidor API REST y Base de Datos desarrollado 
 - Vínculos
 
 ## Descipción
+Repositorio para el Software del Servidor API REST y Base de Datos desarrollado por CleanAirly.
 ## Instalación
+1. Descargar el .zip del repositorio y extraer los archivos.
 ## Instrucciones de uso
 ## Test automático
 ## Advertencias
