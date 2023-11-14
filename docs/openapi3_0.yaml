@@ -1,0 +1,156 @@
+openapi: 3.0.3
+info:
+  version: "1.0.0"
+  title: "API"
+  description: "API REST con servidor express"
+servers:
+  - url: "https://localhost:3001"
+paths:
+  /mediciones/get:
+    get:
+      summary: "Devuelve todas las mediciones"
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 10
+                  valor:
+                    type: number
+                    example: 10
+                  lat:
+                    type: string
+                    example: "10"
+                  long:
+                    type: string
+                    example: "10"
+                  fecha:
+                    type: string
+                    example: "10/10/2023"
+  /mediciones/{valor}:
+    post:
+      summary: "Guarda una medicion"
+      parameters:
+        - name: valor
+          in: path
+          required: true
+          description: "valor de la medicion del sensor"
+          schema:
+            type: number
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valor:
+                    type: number
+                    example: 10
+  /mediciones/login:
+    get:
+      summary: "Autenticación de usuario"
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  autenticado:
+                    type: boolean
+                    example: true
+  /mediciones/registrate:
+    post:
+      summary: "Registro de usuario"
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  registrado:
+                    type: boolean
+                    example: true
+  /mediciones/usuario:
+    get:
+      summary: "Obtener nombre de usuario"
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nombre:
+                    type: string
+                    example: "Usuario Ejemplo"
+  /mediciones/medida:
+    get:
+      summary: "Obtener última medida de la sonda"
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  valor:
+                    type: number
+                    example: 25
+                  instante:
+                    type: string
+                    example: "2023-10-26T15:30:00Z"
+                  lugar:
+                    type: string
+                    example: "Sonda 1"
+                  idSonda:
+                    type: integer
+                    example: 1
+  /mediciones/usuarioUpdate:
+    put:
+      summary: "Actualizar información de usuario"
+      parameters:
+        - name: email
+          in: query
+          required: true
+          description: "Correo electrónico del usuario"
+          schema:
+            type: string
+        - name: password
+          in: query
+          required: true
+          description: "Nueva contraseña del usuario"
+          schema:
+            type: string
+        - name: nombre
+          in: query
+          required: true
+          description: "Nuevo nombre y apellidos del usuario"
+          schema:
+            type: string
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  actualizado:
+                    type: boolean
+                    example: true
