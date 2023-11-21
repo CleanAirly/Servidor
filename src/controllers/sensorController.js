@@ -49,6 +49,15 @@ const sensorController = {
         }
     },
 
+    async emailNoAdmins(req, res, next) {
+        try {
+            const value = await sensorService.emailNoAdmins(req.body);
+            res.json(value);
+        } catch (error) {
+            next(error)
+        }
+    },
+
     /**
      * Registra un nuevo usuario.
      *

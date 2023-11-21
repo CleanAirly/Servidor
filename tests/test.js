@@ -13,7 +13,8 @@ const {
     comprobarContraseña,
     cambiarPassword,
     inactividadSensor,
-    obtenerNMedidas
+    obtenerNMedidas,
+    emailNoAdmins
     
 } = require('../src/services/sensorService.js'); // Asegúrate de proporcionar la ruta correcta
 
@@ -148,6 +149,23 @@ describe('Base de datos - Pruebas', () => {
         }
     });
 
+    it('debería obtener correos electrónicos de usuarios con admin = 0', async () => {
+        try {
+            // Llama a la función que deseas probar
+            const resultado = await emailNoAdmins();
+
+            // Verifica el resultado utilizando assert
+            assert.ok(resultado !== null, 'El resultado no debería ser null');
+            assert.ok(Array.isArray(resultado), 'El resultado debería ser un array');
+
+            // Puedes realizar más aserciones según la estructura de datos esperada
+
+        } catch (error) {
+            // Maneja cualquier excepción si ocurre un error
+            assert.fail('Error en la función emailNoAdmins: ' + error.message);
+        }
+    });
+
     it('debería obtener la última medida correctamente', async () => {
         const mockEmail = { email: 'usuario@example.com' };
 
@@ -171,7 +189,8 @@ describe('Base de datos - Pruebas', () => {
             password: 'contraseña456',
             telefono: '987654321',
             idSonda: 1,
-            nombre: "Jaime"
+            nombre: "Jaime",
+            verificación: false
         };
 
         // Simula un objeto 'body' para la prueba con un nuevo usuario

@@ -90,6 +90,8 @@ router.route('/inactividadSensor').post(sensorController.inactividadSensor)
 
 router.route('/obtenerNMedidas').post(sensorController.obtenerNMedidas)
 
+router.route('/emailNoAdmins').post(sensorController.emailNoAdmins)
+
 
 /**
  * Ruta para actualizar la información de un usuario.

@@ -176,7 +176,7 @@ const registratePost = async (body) => {
             // Las credenciales son válidas
             return "existe";
             
-        } else {
+        } else if (body.verificacion == false) {
             // Realiza una inserción en la tabla 'usuarios' con el correo electrónico y contraseña proporcionados
             const insertQuery = "INSERT INTO usuarios (email, contraseña, nombre, telefono) VALUES (?, ?, ?, ?)";
             const insertQuery1 = "INSERT INTO sonda (idSonda) VALUES (?)";
@@ -193,6 +193,8 @@ const registratePost = async (body) => {
                 // La inserción no tuvo éxito, lo que podría deberse a un correo electrónico duplicado u otros problemas.
                 return false;
             }
+        } else {
+            return "no existe";
         }
 
     } catch (error) {
@@ -211,7 +213,7 @@ const registratePost = async (body) => {
 const nombreUsuarioGet = async (body) => {
     try {
         // Realiza una consulta para obtener el nombre y apellidos del usuario a partir del correo electrónico
-        const queryResult = await query("SELECT nombre, telefono FROM usuarios WHERE email = ?", [body.email]);
+        const queryResult = await query("SELECT u.nombre, u.telefono, us.idSonda FROM usuarios u JOIN usuariosonda us ON u.email = us.email WHERE u.email = ?; ", [body.email]);
         // Comprueba si se encontraron resultados
         if (queryResult.length > 0) {
             // Devuelve el nombre y apellidos del usuario
@@ -401,6 +403,27 @@ const inactividadSensor = async (body) => {
     }
 }
 
+const emailNoAdmins = async (body) => {
+
+    try{
+
+        const requestQuery = "SELECT email FROM usuarios WHERE admin = false";
+        const queryResult = await query(requestQuery, []);
+
+        if (queryResult.length > 0) {
+
+            return queryResult;
+        } else {
+
+            return null;
+        }
+
+    } catch(error){
+        throw error;
+    }
+
+}
+
 /**
  * Exporta las funciones para su uso en otros módulos.
  * @module
@@ -419,5 +442,6 @@ module.exports = {
     comprobarContraseña,
     cambiarPassword,
     inactividadSensor,
-    obtenerNMedidas
+    obtenerNMedidas,
+    emailNoAdmins
 }
