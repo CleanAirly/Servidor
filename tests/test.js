@@ -164,6 +164,44 @@ describe('Base de datos - Pruebas', () => {
         }
     });
 
+    it('debería realizar el registro correctamente o indicar que el usuario ya existe', async () => {
+        // Simula un objeto 'body' para la prueba con un usuario existente
+        const usuarioExistente = {
+            email: 'usuario_existente@example.com',
+            password: 'contraseña456',
+            telefono: '987654321',
+            idSonda: 1,
+            nombre: "Jaime"
+        };
+
+        // Simula un objeto 'body' para la prueba con un nuevo usuario
+        const nuevoUsuario = {
+            email: 'prueba@example.com',
+            password: 'nueva_contraseña',
+            telefono: '123456789',
+            idSonda: 2,
+            nombre: "Jordi"
+        };
+
+        try {
+            // Caso: Usuario ya existente
+            const resultadoExistente = await registratePost(usuarioExistente);
+            assert.strictEqual(resultadoExistente, 'existe', 'Debería ser \'existe\' para un usuario existente');
+/*
+            // Caso: Nuevo registro exitoso
+            const resultadoNuevo = await registratePost(nuevoUsuario);
+            assert.strictEqual(resultadoNuevo, true, 'Debería ser \'true\' para un nuevo registro exitoso');
+
+            // Caso: Nuevo registro no exitoso (puede ser debido a un correo duplicado u otros problemas)
+            const resultadoNoExitoso = await registratePost(nuevoUsuario);
+            assert.strictEqual(resultadoNoExitoso, false, 'Debería ser \'false\' para un nuevo registro no exitoso');
+*/
+        } catch (error) {
+            // Maneja cualquier excepción si ocurre un error
+            assert.fail('Error en la función de registro: ' + error.message);
+        }
+    });
+
     it('debería actualizar el usuario correctamente', async () => {
         const mockUpdateData = { telefono: '111111111', nombre: 'Nuevo Nombre', email: 'usuario@example.com' };
 

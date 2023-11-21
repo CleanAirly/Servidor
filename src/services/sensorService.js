@@ -178,11 +178,15 @@ const registratePost = async (body) => {
             
         } else {
             // Realiza una inserción en la tabla 'usuarios' con el correo electrónico y contraseña proporcionados
-            const insertQuery = "INSERT INTO usuarios (email, contraseña, telefono) VALUES (?, ?, ?)";
-            const insertResult = await query(insertQuery, [body.email, body.password, body.telefono]);
+            const insertQuery = "INSERT INTO usuarios (email, contraseña, nombre, telefono) VALUES (?, ?, ?, ?)";
+            const insertQuery1 = "INSERT INTO sonda (idSonda) VALUES (?)";
+            const insertQuery2 = "INSERT INTO usuariosonda (email, idSonda) VALUES (?, ?)";
+            const insertResult = await query(insertQuery, [body.email, body.password, body.nombre, body.telefono]);
+            const insertResult1 = await query(insertQuery1, [body.idSonda]);
+            const insertResult2 = await query(insertQuery2, [body.email, body.idSonda]);
 
             // Comprueba si la inserción fue exitosa
-            if (insertResult.affectedRows > 0) {
+            if (insertResult.affectedRows > 0 && insertResult1.affectedRows > 0 && insertResult2.affectedRows > 0) {
                 // La inserción se realizó con éxito, lo que significa que el usuario se registró correctamente.
                 return true;
             } else {
