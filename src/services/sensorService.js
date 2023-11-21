@@ -253,6 +253,30 @@ const ultimaMedidaGet = async (body) => {
     }
 }
 
+const obtenerNMedidas = async (body) => {
+    try {
+        // Realiza una consulta para obtener la última medida de la sonda asociada al usuario
+        const queryResult = await query(`
+            SELECT m.*
+            FROM mediciones m
+            INNER JOIN usuariomedicion um ON m.idMedicion = um.idMedicion
+            WHERE um.email = ?
+            ORDER BY m.instante DESC
+            LIMIT ?
+        `, [body.email, body.cantidad]);
+        // Comprueba si se encontraron resultados
+        if (queryResult.length > 0) {
+            // Devuelve la última medida
+            return queryResult;
+        } else {
+            // No se encontraron medidas para el usuario
+            return null;
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
 /**
  * Actualiza los campos de correo electrónico, contraseña y nombre de un usuario en la base de datos.
  * @function
@@ -390,5 +414,6 @@ module.exports = {
     medicionesHoyGet,
     comprobarContraseña,
     cambiarPassword,
-    inactividadSensor
+    inactividadSensor,
+    obtenerNMedidas
 }

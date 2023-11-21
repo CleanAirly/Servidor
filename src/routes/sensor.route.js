@@ -88,7 +88,7 @@ router.route('/comprobarPassword').post(sensorController.comprobarContraseña)
 
 router.route('/inactividadSensor').post(sensorController.inactividadSensor)
 
-
+router.route('/obtenerNMedidas').post(sensorController.obtenerNMedidas)
 
 
 /**

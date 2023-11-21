@@ -12,7 +12,8 @@ const {
     registratePost,
     comprobarContraseña,
     cambiarPassword,
-    inactividadSensor
+    inactividadSensor,
+    obtenerNMedidas
     
 } = require('../src/services/sensorService.js'); // Asegúrate de proporcionar la ruta correcta
 
@@ -58,6 +59,28 @@ describe('Base de datos - Pruebas', () => {
         } catch (error) {
             // Maneja cualquier excepción si ocurre un error
             assert.fail('Error en la función de agregar valor: ' + error);
+        }
+    });
+
+    it('debería obtener las últimas medidas de la sonda asociada a un usuario', async () => {
+        const mockBody = { email: 'usuario@example.com', cantidad: 3 };
+
+        try {
+            // Llama a la función que deseas probar
+            const resultado = await obtenerNMedidas(mockBody);
+
+            // Verifica el resultado utilizando assert
+            assert.ok(resultado, 'Debería haber resultados');
+            assert.strictEqual(Array.isArray(resultado), true, 'El resultado debería ser un array');
+
+            // Verifica que la cantidad de resultados sea la especificada
+            assert.strictEqual(resultado.length, mockBody.cantidad, 'La cantidad de resultados debería ser la especificada');
+
+            // Puedes realizar más aserciones según sea necesario, por ejemplo, verificar la estructura de los objetos en el array
+
+        } catch (error) {
+            // Maneja cualquier excepción si ocurre un error
+            assert.fail('Error en la función obtenerNMedidas: ' + error.message);
         }
     });
 

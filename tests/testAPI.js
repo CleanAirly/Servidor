@@ -49,6 +49,27 @@ describe('Pruebas de la API REST', () => {
             });
     });
 
+    it('debería obtener las últimas medidas de la sonda asociada a un usuario', (done) => {
+        const requestBody = {
+            email: 'usuario@example.com',
+            cantidad: 3,
+        };
+
+        chai.request(app)
+            .post('/api/sensor/obtenerNMedidas') // Ajusta la ruta según tu API
+            .send(requestBody)
+            .end((err, res) => {
+                expect(err).to.be.null;
+                expect(res).to.have.status(200); // Verifica el código de estado de respuesta
+
+                // Añade más aserciones según la respuesta de tu API y la estructura de datos esperada
+                expect(res.body).to.be.an('array'); // Suponiendo que las medidas se devuelven como un array
+                expect(res.body.length).to.equal(requestBody.cantidad); // Verifica la cantidad de medidas devueltas
+
+                done(); // Indica que la prueba ha finalizado
+            });
+    });
+
     it('debería hacer una solicitud POST a la API', (done) => {
         const requestBody = { idSonda: 1, lugar: 'Ubicación', valor: 3535, idContaminante: 1, email: 'usuario@example.com' };
 ;

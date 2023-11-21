@@ -40,6 +40,15 @@ const sensorController = {
         }
     },
 
+    async obtenerNMedidas(req, res, next) {
+        try {
+            const value = await sensorService.obtenerNMedidas(req.body);
+            res.json(value);
+        } catch (error) {
+            next(error)
+        }
+    },
+
     /**
      * Registra un nuevo usuario.
      *
