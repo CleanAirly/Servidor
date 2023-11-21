@@ -1,0 +1,160 @@
+openapi: 3.0.0
+info:
+  title: Sistema de Medición de Contaminantes API
+  description: API para interactuar con el sistema de medición de contaminantes.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000/api
+    description: Desarrollo
+
+paths:
+  /sensor/value:
+    post:
+      summary: Subir un nuevo valor de sensor.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                idSonda:
+                  type: integer
+                lugar:
+                  type: string
+                valor:
+                  type: number
+                idContaminante:
+                  type: integer
+      responses:
+        '200':
+          description: Inserción exitosa en la base de datos.
+
+  /sensor/medidaHoy:
+    post:
+      summary: Obtener mediciones del día actual.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        '200':
+          description: Mediciones del día actual.
+
+  /sensor/registrate:
+    post:
+      summary: Registrar un nuevo usuario.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                nombre:
+                  type: string
+                telefono:
+                  type: string
+                idSonda:
+                  type: integer
+                verificacion:
+                  type: boolean
+      responses:
+        '200':
+          description: Registro exitoso.
+
+  /sensor/usuario:
+    post:
+      summary: Obtener el nombre y apellidos de un usuario.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        '200':
+          description: Nombre y apellidos del usuario.
+
+  /sensor/medida:
+    post:
+      summary: Obtener la última medida de la sonda asociada a un usuario.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+      responses:
+        '200':
+          description: Última medida de la sonda.
+
+  /sensor/obtenerNMedidas:
+    post:
+      summary: Obtener las últimas N medidas de la sonda asociada a un usuario.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                cantidad:
+                  type: integer
+      responses:
+        '200':
+          description: Últimas N medidas de la sonda.
+
+  /sensor/emailNoAdmins:
+    post:
+      summary: Obtener emails de usuarios no administradores.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                admin:
+                  type: boolean
+      responses:
+        '200':
+          description: Emails de usuarios no administradores.
+
+# Agrega más paths según sea necesario para las otras rutas de tu API.
+
+components:
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        email:
+          type: string
+        nombre:
+          type: string
+        telefono:
+          type: string
+        idSonda:
+          type: integer
+        verificacion:
+          type: boolean
