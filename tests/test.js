@@ -118,7 +118,7 @@ describe('Base de datos - Pruebas', () => {
     });
 
     it('debería realizar un inicio de sesión exitoso', async () => {
-        const mockCredentials = { email: "usuario@example.com", password: "nuevaContrasena" };
+        const mockCredentials = { email: "usuario@example.com", password: "nuevaContraseña" };
 
         try {
             // Llama a tu función de inicio de sesión

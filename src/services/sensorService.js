@@ -147,7 +147,13 @@ const loginGet = async (body) => {
         // Si se encuentra una coincidencia, la consulta devolverá filas, de lo contrario, será un arreglo vacío
         if (queryResult.length > 0) {
             // Las credenciales son válidas
-            return true;
+
+            if(queryResult[0].admin === 1){
+                return "admin";
+
+            }else{
+                return true;
+            }
         } else {
             // Las credenciales son inválidas
             return false;
