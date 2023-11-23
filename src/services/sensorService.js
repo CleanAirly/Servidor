@@ -395,7 +395,7 @@ const inactividadSensor = async (body) => {
             const minutosTranscurridos = diferenciaTiempo / (1000 * 60);
 
             // Comprueba si han pasado al menos 1 minuto desde la última medida
-            if (!minutosTranscurridos >= 1) {
+            if (minutosTranscurridos >= 1) {
                 return "inactivo"; // Ha pasado más de 1 minuto, devuelve true
             } else {
                 return "activo"; // No ha pasado 1 minuto, devuelve false
