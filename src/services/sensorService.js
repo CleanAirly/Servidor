@@ -396,13 +396,13 @@ const inactividadSensor = async (body) => {
 
             // Comprueba si han pasado al menos 1 minuto desde la última medida
             if (!minutosTranscurridos >= 1) {
-                return true; // Ha pasado más de 1 minuto, devuelve true
+                return "inactivo"; // Ha pasado más de 1 minuto, devuelve true
             } else {
-                return false; // No ha pasado 1 minuto, devuelve false
+                return "activo"; // No ha pasado 1 minuto, devuelve false
             }
         } else {
             // No se encontraron medidas para el usuario
-            return false;
+            return "sin datos";
         }
     } catch (error) {
         throw error;
