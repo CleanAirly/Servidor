@@ -31,6 +31,15 @@ const sensorController = {
         }
     },
 
+    async todasLasMediciones(req, res, next) {
+        try {
+            const value = await sensorService.todasLasMediciones(req.body);
+            res.json(value);
+        } catch (error) {
+            next(error)
+        }
+    },
+
     async medicionesHoyGet(req, res, next) {
         try {
             const value = await sensorService.medicionesHoyGet(req.body);

@@ -395,14 +395,14 @@ const inactividadSensor = async (body) => {
             const minutosTranscurridos = diferenciaTiempo / (1000 * 60);
 
             // Comprueba si han pasado al menos 1 minuto desde la última medida
-            if (!minutosTranscurridos >= 1) {
-                return true; // Ha pasado más de 1 minuto, devuelve true
+            if (minutosTranscurridos >= 1) {
+                return "inactivo"; // Ha pasado más de 1 minuto, devuelve true
             } else {
-                return false; // No ha pasado 1 minuto, devuelve false
+                return "activo"; // No ha pasado 1 minuto, devuelve false
             }
         } else {
             // No se encontraron medidas para el usuario
-            return false;
+            return "sin datos";
         }
     } catch (error) {
         throw error;
@@ -430,6 +430,27 @@ const emailNoAdmins = async (body) => {
 
 }
 
+const todasLasMediciones = async (body) => {
+
+    try {
+
+        const requestQuery = "";
+        const queryResult = await query(requestQuery, []);
+
+        if (queryResult.length > 0) {
+
+            return queryResult;
+        } else {
+
+            return null;
+        }
+
+    } catch (error) {
+        throw error;
+    }
+
+}
+
 /**
  * Exporta las funciones para su uso en otros módulos.
  * @module
@@ -449,5 +470,6 @@ module.exports = {
     cambiarPassword,
     inactividadSensor,
     obtenerNMedidas,
-    emailNoAdmins
+    emailNoAdmins,
+    todasLasMediciones
 }
