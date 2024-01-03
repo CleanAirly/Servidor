@@ -434,7 +434,7 @@ const todasLasMediciones = async (body) => {
 
     try {
 
-        const requestQuery = "";
+        const requestQuery = "SELECT * FROM usuariomedicion";
         const queryResult = await query(requestQuery, []);
 
         if (queryResult.length > 0) {

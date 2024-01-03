@@ -14,7 +14,8 @@ const {
     cambiarPassword,
     inactividadSensor,
     obtenerNMedidas,
-    emailNoAdmins
+    emailNoAdmins,
+    todasLasMediciones
     
 } = require('../src/services/sensorService.js'); // Asegúrate de proporcionar la ruta correcta
 
@@ -33,6 +34,19 @@ describe('Base de datos - Pruebas', () => {
     // Antes de cada prueba, configura una conexión de prueba si es necesario
 
     // Después de cada prueba, cierra la conexión de prueba si es necesario
+
+    it('debería devolver un array si hay mediciones', async () => {
+        const requestBody = {}; // Puedes ajustar según lo que necesites para la prueba
+
+        try {
+            // Suponiendo que query devuelve un array de resultados de la consulta
+            const resultado = await todasLasMediciones(requestBody);
+
+            assert.ok(Array.isArray(resultado), 'Debería devolver un array si hay mediciones');
+        } catch (error) {
+            assert.fail('Error en la función de todasLasMediciones: ' + error);
+        }
+    });
 
     it('debería agregar un valor a la base de datos', async () => {
         const mockEmail = { email: 'usuario@example.com' };
