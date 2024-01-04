@@ -15,7 +15,8 @@ const {
     inactividadSensor,
     obtenerNMedidas,
     emailNoAdmins,
-    todasLasMediciones
+    todasLasMediciones,
+    ultimasMedidasOzonoConMedia
     
 } = require('../src/services/sensorService.js'); // Asegúrate de proporcionar la ruta correcta
 
@@ -338,6 +339,20 @@ describe('Base de datos - Pruebas', () => {
 
         } catch (error) {
             assert.fail('Error en la función de inactividadSensor para una inactividad de más de 1 minuto: ' + error);
+        }
+    });
+
+    it('debería devolver media ultimas 8 horas de ozono', async () => {
+        const requestBody = {
+            email: 'fcastells@eln.upv.es',
+        };
+
+        try {
+            const resultado = await ultimasMedidasOzonoConMedia(requestBody);
+            assert.ok(resultado.res === true, 'Debería devolver true para si ha hecho bien la media');
+
+        } catch (error) {
+            assert.fail('Error en la función de ultimasMedidasOzonoConMedia: ' + error);
         }
     });
 

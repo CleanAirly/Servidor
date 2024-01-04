@@ -289,6 +289,43 @@ const obtenerNMedidas = async (body) => {
     }
 }
 
+const ultimasMedidasOzonoConMedia = async (body) => {
+    try {
+
+        // Calcula la fecha y hora actuales
+        //const fechaActual = new Date();
+        const fechaActual = new Date('2023-11-24T13:15:30.181');
+        // Resta 8 horas a la fecha actual para obtener la fecha límite de las últimas 8 horas
+        const fechaLimite = new Date(fechaActual);
+        fechaLimite.setHours(fechaActual.getHours() - 8);
+
+        // Realiza una consulta para obtener las medidas de ozono en las últimas 8 horas
+        const queryResult = await query(`
+            SELECT m.*
+            FROM mediciones m
+            INNER JOIN usuariomedicion um ON m.idMedicion = um.idMedicion
+            INNER JOIN contaminantes c ON m.idContaminante = c.idContaminante
+            WHERE um.email = ? AND c.nombre = 'ozono' AND m.instante >= ?
+            ORDER BY m.instante DESC
+        `, [body.email, fechaLimite]);
+
+        // Comprueba si se encontraron resultados
+        if (queryResult.length > 0) {
+            // Calcula la media de todos los valores de las mediciones
+            const media = queryResult.reduce((sum, medida) => sum + medida.valor, 0) / queryResult.length;
+            let res = true;
+            // Devuelve las medidas de ozono de las últimas 8 horas junto con la media
+            return { medidas: queryResult, media, res };
+        } else {
+            // No se encontraron medidas para el usuario en las últimas 8 horas
+            return null;
+        }
+    } catch (error) {
+        throw error;
+    }
+};
+
+
 /**
  * Actualiza los campos de correo electrónico, contraseña y nombre de un usuario en la base de datos.
  * @function
@@ -471,5 +508,6 @@ module.exports = {
     inactividadSensor,
     obtenerNMedidas,
     emailNoAdmins,
-    todasLasMediciones
+    todasLasMediciones,
+    ultimasMedidasOzonoConMedia
 }

@@ -22,9 +22,18 @@ const sensorController = {
      * @param {object} res - Objeto de respuesta HTTP.
      * @param {function} next - Función para pasar al siguiente middleware.
      */
+    async ultimasMedidasOzonoConMedia(req, res, next) {
+        try {
+            const value = await sensorService.ultimasMedidasOzonoConMedia(req.body);
+            res.json(value);
+        } catch (error) {
+            next(error)
+        }
+    },
+
     async uploadValue(req, res, next) {
         try {
-            const value = await sensorService.addValue(req.body);
+            const value = await sensorService.uploadValue(req.body);
             res.json(value);
         } catch (error) {
             next(error)

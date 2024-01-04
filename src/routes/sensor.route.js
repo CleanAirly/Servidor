@@ -94,6 +94,7 @@ router.route('/emailNoAdmins').post(sensorController.emailNoAdmins)
 
 router.route('/todasLasMediciones').post(sensorController.todasLasMediciones)
 
+router.route('/8HorasMedia').post(sensorController.ultimasMedidasOzonoConMedia)
 
 /**
  * Ruta para actualizar la información de un usuario.
