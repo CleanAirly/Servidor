@@ -289,6 +289,43 @@ const obtenerNMedidas = async (body) => {
     }
 }
 
+const ultimasMedidasOzonoConMedia = async (body) => {
+    try {
+
+        // Calcula la fecha y hora actuales
+        //const fechaActual = new Date();
+        const fechaActual = new Date('2023-11-24T13:15:30.181');
+        // Resta 8 horas a la fecha actual para obtener la fecha límite de las últimas 8 horas
+        const fechaLimite = new Date(fechaActual);
+        fechaLimite.setHours(fechaActual.getHours() - 8);
+
+        // Realiza una consulta para obtener las medidas de ozono en las últimas 8 horas
+        const queryResult = await query(`
+            SELECT m.*
+            FROM mediciones m
+            INNER JOIN usuariomedicion um ON m.idMedicion = um.idMedicion
+            INNER JOIN contaminantes c ON m.idContaminante = c.idContaminante
+            WHERE um.email = ? AND c.nombre = 'ozono' AND m.instante >= ?
+            ORDER BY m.instante DESC
+        `, [body.email, fechaLimite]);
+
+        // Comprueba si se encontraron resultados
+        if (queryResult.length > 0) {
+            // Calcula la media de todos los valores de las mediciones
+            const media = queryResult.reduce((sum, medida) => sum + medida.valor, 0) / queryResult.length;
+            let res = true;
+            // Devuelve las medidas de ozono de las últimas 8 horas junto con la media
+            return { medidas: queryResult, media, res };
+        } else {
+            // No se encontraron medidas para el usuario en las últimas 8 horas
+            return null;
+        }
+    } catch (error) {
+        throw error;
+    }
+};
+
+
 /**
  * Actualiza los campos de correo electrónico, contraseña y nombre de un usuario en la base de datos.
  * @function
@@ -395,14 +432,14 @@ const inactividadSensor = async (body) => {
             const minutosTranscurridos = diferenciaTiempo / (1000 * 60);
 
             // Comprueba si han pasado al menos 1 minuto desde la última medida
-            if (!minutosTranscurridos >= 1) {
-                return true; // Ha pasado más de 1 minuto, devuelve true
+            if (minutosTranscurridos >= 1) {
+                return "inactivo"; // Ha pasado más de 1 minuto, devuelve true
             } else {
-                return false; // No ha pasado 1 minuto, devuelve false
+                return "activo"; // No ha pasado 1 minuto, devuelve false
             }
         } else {
             // No se encontraron medidas para el usuario
-            return false;
+            return "sin datos";
         }
     } catch (error) {
         throw error;
@@ -430,6 +467,27 @@ const emailNoAdmins = async (body) => {
 
 }
 
+const todasLasMediciones = async (body) => {
+
+    try {
+
+        const requestQuery = "SELECT * FROM usuariomedicion";
+        const queryResult = await query(requestQuery, []);
+
+        if (queryResult.length > 0) {
+
+            return queryResult;
+        } else {
+
+            return null;
+        }
+
+    } catch (error) {
+        throw error;
+    }
+
+}
+
 /**
  * Exporta las funciones para su uso en otros módulos.
  * @module
@@ -449,5 +507,7 @@ module.exports = {
     cambiarPassword,
     inactividadSensor,
     obtenerNMedidas,
-    emailNoAdmins
+    emailNoAdmins,
+    todasLasMediciones,
+    ultimasMedidasOzonoConMedia
 }
