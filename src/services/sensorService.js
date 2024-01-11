@@ -471,7 +471,7 @@ const todasLasMediciones = async (body) => {
 
     try {
 
-        const requestQuery = "SELECT * FROM usuariomedicion";
+        const requestQuery = "SELECT * FROM mediciones";
         const queryResult = await query(requestQuery, []);
 
         if (queryResult.length > 0) {
@@ -491,29 +491,30 @@ const todasLasMediciones = async (body) => {
 const historicosMapa = async (body) => {
 
     try{
-
-        const todasLasMediciones = await this.todasLasMediciones(body);
+        const mediciones = await todasLasMediciones(body);
         let fecha = body.date;
+        console.log(fecha)
         let medicionesDiaConcreto = [];
-        for(var i = 0; i<=todasLasMediciones.length-1;i++){
-            let fechaMedida = todasLasMediciones[i].instante.split(" ");
+        for(let i = 0; i<=mediciones.length-1; i++){
+            let fechaMedida = mediciones[i].instante.split(" ");
+            console.log(fechaMedida[0])
             if(fecha == fechaMedida[0]){
-                medicionesDiaConcreto.push(todasLasMediciones[i])
+                medicionesDiaConcreto.push(mediciones[i])
             }
         }
 
         let medicionesDiaConcretoLugar = [];
-        let lugarLat = 38.9656;
-        let lugarLong = -0.1845; 
-        for(var i = 0; i<=medicionesDiaConcreto.length-1;i++){
+        let lugarLat = 38.9960393;
+        let lugarLong = 52.20000076293945;
+        for(let i = 0; i<=medicionesDiaConcreto.length-1;i++){
             let lugarMedida = medicionesDiaConcreto[i].lugar.split(",");
-            if(lugarLat + 0.15 >= lugarMedida[0] && lugarLat -0.15 <= lugarMedida[0]){
-                if (lugarLong+ 0.15 >= lugarMedida[0] && lugarLong - 0.15 <= lugarMedida[0]){
+            if(lugarLat + 0.15 >= parseFloat(lugarMedida[0]) && lugarLat -0.15 <= parseFloat(lugarMedida[0])){
+                if (lugarLong+ 0.15 >= parseFloat(lugarMedida[1]) && lugarLong - 0.15 <= parseFloat(lugarMedida[1])){
                     medicionesDiaConcretoLugar.push(medicionesDiaConcreto[i])
                 }
             }
         }
-
+        console.log(medicionesDiaConcretoLugar)
         return medicionesDiaConcretoLugar;
 
     }catch(error){
