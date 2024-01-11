@@ -488,6 +488,39 @@ const todasLasMediciones = async (body) => {
 
 }
 
+const historicosMapa = async (body) => {
+
+    try{
+
+        const todasLasMediciones = await this.todasLasMediciones(body);
+        let fecha = body.date;
+        let medicionesDiaConcreto = [];
+        for(var i = 0; i<=todasLasMediciones.length-1;i++){
+            let fechaMedida = todasLasMediciones[i].instante.split(" ");
+            if(fecha == fechaMedida[0]){
+                medicionesDiaConcreto.push(todasLasMediciones[i])
+            }
+        }
+
+        let medicionesDiaConcretoLugar = [];
+        let lugarLat = 38.9656;
+        let lugarLong = -0.1845; 
+        for(var i = 0; i<=medicionesDiaConcreto.length-1;i++){
+            let lugarMedida = medicionesDiaConcreto[i].lugar.split(",");
+            if(lugarLat + 0.15 >= lugarMedida[0] && lugarLat -0.15 <= lugarMedida[0]){
+                if (lugarLong+ 0.15 >= lugarMedida[0] && lugarLong - 0.15 <= lugarMedida[0]){
+                    medicionesDiaConcretoLugar.push(medicionesDiaConcreto[i])
+                }
+            }
+        }
+
+        return medicionesDiaConcretoLugar;
+
+    }catch(error){
+        throw error;
+    }
+}
+
 /**
  * Exporta las funciones para su uso en otros módulos.
  * @module
@@ -509,5 +542,6 @@ module.exports = {
     obtenerNMedidas,
     emailNoAdmins,
     todasLasMediciones,
-    ultimasMedidasOzonoConMedia
+    ultimasMedidasOzonoConMedia,
+    historicosMapa
 }

@@ -31,6 +31,15 @@ const sensorController = {
         }
     },
 
+    async historicosMapa(req, res, next) {
+        try {
+            const value = await sensorService.historicosMapa(req.body);
+            res.json(value);
+        } catch (error) {
+            next(error)
+        }
+    },
+
     async uploadValue(req, res, next) {
         try {
             const value = await sensorService.uploadValue(req.body);

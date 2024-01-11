@@ -96,6 +96,8 @@ router.route('/todasLasMediciones').post(sensorController.todasLasMediciones)
 
 router.route('/8HorasMedia').post(sensorController.ultimasMedidasOzonoConMedia)
 
+router.route('/historicosMapa').post(sensorController.historicosMapa)
+
 /**
  * Ruta para actualizar la información de un usuario.
  *
