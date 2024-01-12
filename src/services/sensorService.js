@@ -504,8 +504,8 @@ const historicosMapa = async (body) => {
         }
 
         let medicionesDiaConcretoLugar = [];
-        let lugarLat = 38.9960393;
-        let lugarLong = 52.20000076293945;
+        let lugarLat = 38.998381834680494;
+        let lugarLong = -0.16255835233492064;
         for(let i = 0; i<=medicionesDiaConcreto.length-1;i++){
             let lugarMedida = medicionesDiaConcreto[i].lugar.split(",");
             if(lugarLat + 0.15 >= parseFloat(lugarMedida[0]) && lugarLat -0.15 <= parseFloat(lugarMedida[0])){
